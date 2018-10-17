@@ -44,11 +44,28 @@ router.get('/', (req, res) => {
 
 
 router.post('/login', (req, res) => {
-    bcrypt.compare('somePassword', hash, function (err, res) {
-        if (res) {
-            // Passwords match
-        } else {
-            // Passwords don't match
+    let [username , password ] = [ req.body.username,req.body.password ]
+    let sql = `Select username, password from users where username = ?;`
+    db.query(sql,username,(err,results,fields)=>{
+        let genericMsg = 'Please check the provided login credentials. No match found.'
+        if (err){
+            return res.status(400).send(err);
+        }
+        else if (results.length === 0 ) {
+            return res.status(401).send({msg: genericMsg});
+        }
+        else {
+            let result = results[0];
+            bcrypt.compare(password,result.password,(err,bCryptRes)=>{
+                if (err){
+                    res.status(500).send('Internal Server Error');
+                }
+                if (bCryptRes){
+                    res.status(200).send({msg:'Authenticated succesfully'});
+                }else{
+                    res.status(401).send({msg:genericMsg});
+                }
+            });
         }
     });
 });
