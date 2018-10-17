@@ -8,7 +8,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
 
 
-app.use('/user',routeUsers);
+app.use('/api/user',routeUsers);
 
 const port = process.env.PORT || 3000;
 app.listen(port,()=>{

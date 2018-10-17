@@ -4,7 +4,9 @@ const connection = mysql.createConnection({
   user     : 'SeniorUserNode',
   password : '5En1or2seR',
   database : 'senior_school_registrations',
-  insecureAuth: true
+  insecureAuth: true,
+  multipleStatements : true
+  
 });
 
 connection.connect(function(err) {
