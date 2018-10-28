@@ -7,6 +7,9 @@ const path    = require("path");
 //     res.sendFile(path.join(__dirname+'/../../client/login/login.html'));
 // })
 
+router.get('/',(req,res)=>{
+    res.redirect('/login');
+});
 router.use('/login', express.static(path.join(__dirname, '/../../client/login')));
 router.use('/register', express.static(path.join(__dirname, '/../../client/register')));
 router.use('/img',express.static(path.join(__dirname, '/../../client/img')))
