@@ -1,0 +1,37 @@
+
+body {
+    color: #ffffff;
+    background: #2B5319
+}
+
+
+ /* Small devices (landscape phones, 576px and up) */
+@media (min-width: 320px) { 
+    .main-content {
+        padding: 50px 10px 0px 10px;
+    }
+ }
+
+ /* Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) {
+    .login-details-inner {
+        margin-left: 30px
+    }
+    .logo-container {
+        padding-right: 50px;
+        text-align: right;
+    }
+
+    .login-details-container {
+        border-left: 1px solid #ffffff;
+    }
+    .main-content {
+        padding: 150px 10px 0px 10px;
+    }
+    
+ }
+
+ a {
+     color: white;
+     font-weight: bold;
+ }

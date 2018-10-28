@@ -9,14 +9,14 @@ const user = {
     altEmail: "test2@gmail.com"
 }
 
-beforeEach((done) => {
+
+afterEach((done) => {
     let sql = 'Delete from users where username = ?'
     db.query(sql,user.username,(err,rows)=>{
-
         done(err);
     });
     
-})
+});
 
 describe('POST /api/user/register',()=>{
     it('should create a new user',(done)=>{
@@ -45,4 +45,31 @@ describe('POST /api/user/register',()=>{
                 //search in db for newly created user
             })
     });
+
+    it('should not create a new user as far as the username is already being used by somebody else',(done)=>{
+        let sql = 'insert into users (username,email,password,user_type,alt_email) values (?,?,?,10,?);'
+        db.query(sql,[user.username,user.username,user.password,user.altEmail],(err,rows)=>{
+            if (err){
+                done(err);
+            }
+            request(app)
+                .post('/api/user/register')
+                .send(user)
+                .expect(400)
+                .expect((res)=>{
+                    expect(res.body.msg).toBe('A user with the same username exists');
+                    expect(res.body.code).toBe(-1);
+                })
+                .end((err,res)=>{
+                    if (err) done(err);
+                    done();
+                })
+
+        });
+
+            
+
+    })
+
+
 })
